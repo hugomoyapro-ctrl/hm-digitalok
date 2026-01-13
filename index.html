@@ -5,28 +5,47 @@
   <title>HM Digital — Google Ads & Sites Web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* ===== Reset ===== */
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
       background:#f7f7f8;
       color:#0f172a;
       font-family:Inter,Arial,sans-serif;
+      overflow-x:hidden;
     }
     a{color:inherit;text-decoration:none}
+    ul{margin:0}
     .container{max-width:1120px;margin:0 auto;padding:40px 20px}
 
-    /* Header */
+    /* ===== Background decor ===== */
+    .bg{position:fixed;inset:0;pointer-events:none;z-index:-1}
+    .orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(30px);opacity:.22}
+    .orb.gold{right:-160px;top:-160px;background:radial-gradient(circle at 30% 30%, rgba(216,161,6,.9), transparent 60%)}
+    .orb.teal{left:-160px;bottom:-160px;background:radial-gradient(circle at 30% 30%, rgba(10,167,165,.85), transparent 60%)}
+    .grid{
+      position:absolute;inset:-2px;opacity:.32;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(216,161,6,.12), transparent 40%),
+        radial-gradient(circle at 80% 90%, rgba(10,167,165,.10), transparent 40%),
+        linear-gradient(rgba(15,23,42,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,23,42,.06) 1px, transparent 1px);
+      background-size:auto,auto,70px 70px,70px 70px;
+      mask-image: radial-gradient(circle at 50% 20%, black 35%, transparent 70%);
+    }
+
+    /* ===== Header ===== */
     header{
-      position:sticky;top:0;z-index:20;
+      position:sticky;top:0;z-index:50;
       background:rgba(255,255,255,.88);
       backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(0,0,0,.08);
     }
     .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;gap:12px;align-items:center}
+    .brand{display:flex;gap:12px;align-items:center;cursor:pointer}
     .brand img{
       width:46px;height:46px;object-fit:contain;
       border-radius:12px;background:#fff;
@@ -34,19 +53,22 @@
       padding:6px;
     }
     .brand strong{font-family:"Playfair Display",serif;font-size:18px;display:block;line-height:1.05}
-    .brand span{font-size:12px;color:rgba(15,23,42,.62)}
-    nav a{margin-left:18px;font-weight:700;color:rgba(15,23,42,.78)}
+    .brand span{display:block;font-size:12px;color:rgba(15,23,42,.62)}
+    nav a{margin-left:18px;font-weight:800;color:rgba(15,23,42,.78)}
     nav a:hover{color:rgba(15,23,42,1)}
+    .navBtn{margin-left:18px}
 
-    /* Buttons */
+    /* ===== Buttons ===== */
     .btn{
-      display:inline-flex;align-items:center;justify-content:center;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
       padding:12px 16px;border-radius:14px;
-      font-weight:800;border:1px solid rgba(0,0,0,.10);
+      font-weight:900;border:1px solid rgba(0,0,0,.10);
       background:#fff;cursor:pointer;
-      transition:.15s ease;
+      transition:transform .15s ease, filter .15s ease, background .15s ease;
+      user-select:none;
     }
     .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0px)}
     .btn.primary{
       background:linear-gradient(135deg,#d8a106,#0aa7a5);
       color:#0f172a;border:1px solid rgba(0,0,0,.12);
@@ -55,7 +77,7 @@
     .btn.ghost{background:transparent}
     .btn.full{width:100%}
 
-    /* Hero */
+    /* ===== Hero ===== */
     .hero{padding:30px 0 10px}
     .hero-inner{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start}
     .pill{
@@ -70,16 +92,16 @@
     h1{
       font-family:"Playfair Display",serif;
       font-size:clamp(34px,4vw,54px);
-      line-height:1.05;margin:16px 0 10px;
-      letter-spacing:.2px;
+      line-height:1.05;margin:16px 0 10px;letter-spacing:.2px;
     }
-    h1 span{
+    .accent{
       background:linear-gradient(135deg,#b88700,#0e7c7b);
       -webkit-background-clip:text;background-clip:text;color:transparent;
     }
     .lead{color:rgba(15,23,42,.72);line-height:1.75;max-width:62ch}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
 
+    /* ===== Cards ===== */
     .card{
       background:rgba(255,255,255,.92);
       border:1px solid rgba(0,0,0,.10);
@@ -88,25 +110,27 @@
       box-shadow:0 20px 50px rgba(0,0,0,.08);
       position:relative;overflow:hidden;
     }
-    .card:before{
+    .card.glow:before{
       content:"";position:absolute;inset:-2px;pointer-events:none;
       background:radial-gradient(circle at 20% 10%, rgba(216,161,6,.18), transparent 45%),
                  radial-gradient(circle at 80% 90%, rgba(10,167,165,.14), transparent 45%);
     }
     .card>*{position:relative}
     .card h3{margin:0 0 10px}
-    .card ul{margin:0;padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
+    .card ul{padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
     .small{font-size:13px;color:rgba(15,23,42,.62);margin-top:10px}
+    .muted{color:rgba(15,23,42,.62)}
 
-    /* Sections */
+    /* ===== Sections ===== */
     .section{padding:40px 0}
     .section.light{
       background:rgba(255,255,255,.72);
       border-top:1px solid rgba(0,0,0,.06);
       border-bottom:1px solid rgba(0,0,0,.06);
     }
-    h2{font-family:"Playfair Display",serif;font-size:34px;margin:0 0 18px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    h2{font-family:"Playfair Display",serif;font-size:34px;margin:0 0 14px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
     .box{
       background:rgba(255,255,255,.92);
       border:1px solid rgba(0,0,0,.10);
@@ -117,13 +141,59 @@
     .box h3{margin:0 0 8px}
     .box p{margin:0;color:rgba(15,23,42,.72);line-height:1.65}
 
-    /* Contact */
+    /* ===== Pricing ===== */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
+    .priceTag{
+      display:inline-block;font-size:12px;font-weight:900;
+      padding:8px 10px;border-radius:999px;
+      background:rgba(15,23,42,.06);
+      border:1px solid rgba(0,0,0,.08);
+      margin-bottom:10px;
+    }
+    .price{
+      font-size:32px;font-weight:900;margin:10px 0 10px;letter-spacing:.2px;
+    }
+    .priceCard ul{padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
+    .priceCard.featured{
+      border-color:rgba(216,161,6,.35);
+      background:linear-gradient(180deg, rgba(216,161,6,.10), rgba(10,167,165,.06));
+    }
+
+    /* ===== "Pour qui" tags ===== */
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:999px;
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.10);
+      box-shadow:0 10px 25px rgba(0,0,0,.06);
+      font-weight:800;font-size:13px;color:rgba(15,23,42,.78)
+    }
+
+    /* ===== 30 jours ===== */
+    .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px}
+    .step{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.10);
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 18px 40px rgba(0,0,0,.07);
+    }
+    .kpi{
+      width:44px;height:44px;border-radius:14px;
+      display:grid;place-items:center;
+      background:rgba(15,23,42,.06);
+      border:1px solid rgba(0,0,0,.08);
+      font-weight:900;
+      margin-bottom:10px;
+    }
+
+    /* ===== Contact ===== */
     .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
     .row{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06)}
     .row:last-child{border-bottom:none}
-
     form label{
-      display:block;font-size:13px;font-weight:800;color:rgba(15,23,42,.72);
+      display:block;font-size:13px;font-weight:900;color:rgba(15,23,42,.72);
       margin-bottom:12px;
     }
     input,select,textarea{
@@ -136,207 +206,362 @@
       box-shadow:0 0 0 3px rgba(216,161,6,.18);
     }
     .hp{display:none}
-    .form-msg{margin-top:12px;color:#0e7c7b;font-weight:800}
+    .form-msg{margin-top:12px;color:#0e7c7b;font-weight:900}
 
-    footer{
-      margin-top:30px;
-      background:rgba(255,255,255,.72);
-      border-top:1px solid rgba(0,0,0,.06);
+    /* ===== Back to top ===== */
+    .backTop{
+      position:fixed;right:18px;bottom:18px;z-index:60;
+      opacity:0;pointer-events:none;transform:translateY(8px);
+      transition:.2s ease;
     }
-    .footer-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
-    .muted{color:rgba(15,23,42,.62)}
+    .backTop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 
-    @media (max-width: 980px){
+    /* ===== Animations (reveal) ===== */
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+
+    /* ===== Responsive ===== */
+    @media (max-width:980px){
       .hero-inner{grid-template-columns:1fr}
-      .grid{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr}
+      .pricing{grid-template-columns:1fr}
       .contact-wrap{grid-template-columns:1fr}
+      .timeline{grid-template-columns:1fr}
       nav{display:none}
     }
   </style>
 </head>
 
 <body>
+  <div class="bg" aria-hidden="true">
+    <div class="orb gold"></div>
+    <div class="orb teal"></div>
+    <div class="grid"></div>
+  </div>
 
-<header>
-  <div class="container header-inner">
-    <div class="brand">
-      <img src="logo.png" alt="HM Digital">
-      <div>
-        <strong>HM Digital</strong>
-        <span>Google Ads • Sites web</span>
+  <header>
+    <div class="container header-inner">
+      <div class="brand" id="brandTop" title="Retour en haut">
+        <img src="logo.png" alt="HM Digital">
+        <div>
+          <strong>HM Digital</strong>
+          <span>Google Ads • Sites web</span>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#forwho">Pour qui ?</a>
+        <a href="#method">Méthode</a>
+        <a href="#days30">30 jours</a>
+        <a href="#offers">Formules</a>
+        <a href="#contact" class="btn navBtn">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero reveal" id="top">
+    <div class="container hero-inner">
+      <div class="reveal">
+        <div class="pill"><span class="dot"></span> Acquisition locale premium • Budget maîtrisé • Suivi clair</div>
+        <h1>Générez plus d’appels<br>avec <span class="accent">Google Ads</span> & un site qui convertit.</h1>
+        <p class="lead">
+          HM Digital accompagne les entreprises locales partout en France avec une approche simple :
+          attirer (Google Ads) → convertir (site) → mesurer (suivi).
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="tel:0617255364">📞 Appeler</a>
+          <a class="btn ghost" href="#contact">Audit 10 min</a>
+        </div>
+
+        <p class="small">📍 Intervention : <strong>Toute la France</strong></p>
+      </div>
+
+      <div class="card glow reveal">
+        <h3>Approche</h3>
+        <ul>
+          <li>Campagnes Google Ads orientées appels et demandes</li>
+          <li>Pages / site optimisés conversion (CTA, rassurance, vitesse)</li>
+          <li>Suivi simple + optimisations continues</li>
+        </ul>
+        <p class="small">Transparence : le budget publicité est payé directement à Google.</p>
       </div>
     </div>
+  </section>
 
-    <nav>
-      <a href="#services">Services</a>
-      <a href="#method">Méthode</a>
-      <a href="#contact" class="btn">Contact</a>
-    </nav>
-  </div>
-</header>
+  <section id="services" class="section reveal">
+    <div class="container">
+      <h2>Services</h2>
+      <p class="muted">Une offre courte, premium et orientée résultats pour les entreprises locales.</p>
 
-<section class="hero" id="top">
-  <div class="container hero-inner">
-    <div>
-      <div class="pill"><span class="dot"></span> Acquisition locale premium • Budget maîtrisé • Suivi clair</div>
-      <h1>Générez plus d’appels<br>avec <span>Google Ads</span> & un site qui convertit.</h1>
-      <p class="lead">
-        HM Digital accompagne les entreprises locales avec une approche simple :
-        attirer (Google Ads) → convertir (site) → mesurer (suivi).
+      <div class="grid3">
+        <div class="box reveal">
+          <h3>Google Ads</h3>
+          <p>Génération d’appels et de demandes qualifiées via Google (Search / Local).</p>
+        </div>
+        <div class="box reveal">
+          <h3>Site / Landing</h3>
+          <p>Pages optimisées conversion : rassurance, vitesse, CTA, formulaire.</p>
+        </div>
+        <div class="box reveal">
+          <h3>Suivi</h3>
+          <p>Lecture simple des performances et optimisations continues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Pour qui ? ===== -->
+  <section id="forwho" class="section light reveal">
+    <div class="container">
+      <h2>Pour qui ?</h2>
+      <p class="muted">Cette méthode fonctionne pour toute activité locale qui veut plus d’appels ou de demandes.</p>
+
+      <div class="chips reveal">
+        <div class="chip">🛠️ Artisans</div>
+        <div class="chip">🏥 Santé / bien-être</div>
+        <div class="chip">🏠 Services à domicile</div>
+        <div class="chip">🏪 Commerces</div>
+        <div class="chip">🏢 B2B local</div>
+        <div class="chip">🚚 Dépannage / urgence</div>
+        <div class="chip">🏬 Réseaux / franchises</div>
+        <div class="chip">📍 Multi-sites</div>
+      </div>
+
+      <p class="small muted" style="margin-top:14px;">
+        Objectif : apparaître au bon moment quand un client cherche votre service, et transformer ce clic en appel ou en message.
       </p>
-      <div class="hero-actions">
-        <a class="btn primary" href="tel:0617255364">📞 Appeler</a>
-        <a class="btn ghost" href="#contact">Audit 10 min</a>
+    </div>
+  </section>
+
+  <section id="method" class="section light reveal">
+    <div class="container">
+      <h2>Méthode</h2>
+      <p class="muted">Une méthode simple et efficace, applicable à toute activité locale.</p>
+
+      <div class="grid3">
+        <div class="box reveal">
+          <h3>1. Audit</h3>
+          <p>Analyse rapide du potentiel, de la concurrence et des objectifs.</p>
+        </div>
+        <div class="box reveal">
+          <h3>2. Test</h3>
+          <p>Lancement contrôlé pour valider coût / lead et qualité des demandes.</p>
+        </div>
+        <div class="box reveal">
+          <h3>3. Optimisation</h3>
+          <p>Amélioration continue, puis montée progressive si rentable.</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="card">
-      <h3>Approche</h3>
-      <ul>
-        <li>Campagnes Google Ads locales orientées appels</li>
-        <li>Site clair, rapide et rassurant pour convertir</li>
-        <li>Suivi simple et optimisations continues</li>
-      </ul>
-      <p class="small">Transparence : le budget publicité est payé directement à Google.</p>
+  <!-- ===== 30 jours ===== -->
+  <section id="days30" class="section reveal">
+    <div class="container">
+      <h2>Ce que vous obtenez en 30 jours</h2>
+      <p class="muted">Un plan clair, des campagnes propres, et des décisions basées sur des données.</p>
+
+      <div class="timeline">
+        <div class="step reveal">
+          <div class="kpi">S1</div>
+          <h3>Structure propre</h3>
+          <p class="muted">Mots-clés, annonces, ciblage géographique, extensions, tracking.</p>
+        </div>
+        <div class="step reveal">
+          <div class="kpi">S2</div>
+          <h3>Données + ajustements</h3>
+          <p class="muted">On coupe ce qui ne marche pas, on renforce ce qui performe.</p>
+        </div>
+        <div class="step reveal">
+          <div class="kpi">S3</div>
+          <h3>Optimisation conversion</h3>
+          <p class="muted">Amélioration des annonces et de la page (CTA, rassurance, vitesse).</p>
+        </div>
+        <div class="step reveal">
+          <div class="kpi">S4</div>
+          <h3>Plan pour scaler</h3>
+          <p class="muted">Lecture claire + stratégie : stabiliser puis augmenter progressivement.</p>
+        </div>
+      </div>
+
+      <p class="small muted" style="margin-top:14px;">
+        💡 Le but n’est pas “d’être visible”, mais de générer des demandes rentables et mesurables.
+      </p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="services" class="section">
-  <div class="container">
-    <h2>Services</h2>
-    <div class="grid">
-      <div class="box">
-        <h3>Google Ads</h3>
-        <p>Génération d’appels et de demandes qualifiées via Google.</p>
+  <section id="offers" class="section light reveal">
+    <div class="container">
+      <h2>Formules</h2>
+      <p class="muted">Gestion Google Ads claire, simple et orientée résultats. Le budget publicitaire est payé directement à Google.</p>
+
+      <div class="pricing">
+        <div class="box priceCard reveal">
+          <div class="priceTag">Démarrage</div>
+          <h3>Pack Lancement</h3>
+          <div class="price">300€ <span class="muted">/ mois</span></div>
+          <ul>
+            <li>Création / structuration des campagnes</li>
+            <li>Tracking appels & conversions</li>
+            <li>Optimisations régulières</li>
+            <li>Reporting simple (ce qui marche / à améliorer)</li>
+          </ul>
+          <p class="small muted">Idéal pour démarrer sur 1 activité / 1 zone.</p>
+          <a class="btn primary full" href="#contact">Demander une proposition</a>
+        </div>
+
+        <div class="box priceCard featured reveal">
+          <div class="priceTag">Multi-sites</div>
+          <h3>Pack Réseau</h3>
+          <div class="price">250€ <span class="muted">/ mois / site</span></div>
+          <ul>
+            <li>Campagnes dédiées par activité ou zone</li>
+            <li>Ciblage géographique précis</li>
+            <li>Optimisations continues</li>
+            <li>Suivi et lecture par site ou entité</li>
+          </ul>
+          <p class="small muted">Tarif préférentiel à partir de plusieurs sites ou zones.</p>
+          <a class="btn primary full" href="#contact">Voir l’offre réseau</a>
+        </div>
+
+        <div class="box priceCard reveal">
+          <div class="priceTag">Option</div>
+          <h3>Landing / Site</h3>
+          <div class="price">Sur devis</div>
+          <ul>
+            <li>Landing orientée appels / demandes</li>
+            <li>Pages locales (1 par ville/zone)</li>
+            <li>Optimisation conversion</li>
+            <li>Vitesse & design premium</li>
+          </ul>
+          <p class="small muted">Recommandé pour maximiser le coût par lead.</p>
+          <a class="btn full" href="#contact">Demander un devis</a>
+        </div>
       </div>
-      <div class="box">
-        <h3>Site web</h3>
-        <p>Site optimisé conversion (appels, formulaire, prise de contact).</p>
-      </div>
-      <div class="box">
-        <h3>Suivi</h3>
-        <p>Lecture simple des performances + optimisations continues.</p>
+
+      <p class="small muted" style="margin-top:14px;">
+        💡 Le budget publicitaire est séparé : vous payez Google directement (contrôle total). HM Digital facture la gestion.
+      </p>
+    </div>
+  </section>
+
+  <section id="contact" class="section reveal">
+    <div class="container">
+      <h2>Contact</h2>
+      <p class="muted">Indiquez votre activité et votre ville. Je vous réponds rapidement.</p>
+
+      <div class="contact-wrap">
+        <div class="box reveal">
+          <h3 style="margin-top:0;">HM Digital</h3>
+          <div class="row"><span>📞</span><a href="tel:0617255364">06 17 25 53 64</a></div>
+          <div class="row"><span>✉️</span><a href="mailto:hmdigital.contact@gmail.com">hmdigital.contact@gmail.com</a></div>
+          <div class="row"><span>📍</span><span>Toute la France</span></div>
+          <p class="small muted">Après l’appel, vous recevez un récapitulatif clair (objectif, budget, plan d’action).</p>
+        </div>
+
+        <!-- IFRAME caché = submit sans redirection -->
+        <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+        <form class="box reveal"
+              method="POST"
+              action="https://formsubmit.co/hmdigital.contact@gmail.com"
+              target="hidden_iframe"
+              onsubmit="return showMessageAndReset();">
+
+          <!-- Options FormSubmit -->
+          <input type="hidden" name="_subject" value="Nouveau lead — HM Digital">
+          <input type="hidden" name="_captcha" value="false">
+
+          <label>Nom / Entreprise
+            <input type="text" name="company" required>
+          </label>
+
+          <label>Ville
+            <input type="text" name="city" required>
+          </label>
+
+          <label>Objectif principal
+            <select name="goal" required>
+              <option value="">Choisissez</option>
+              <option>Recevoir plus d'appels</option>
+              <option>Recevoir plus de formulaires</option>
+              <option>Créer ou optimiser un site</option>
+              <option>Google Ads + Site</option>
+            </select>
+          </label>
+
+          <label>Téléphone
+            <input type="tel" name="phone">
+          </label>
+
+          <label>Email
+            <input type="email" name="email">
+          </label>
+
+          <label>Message
+            <textarea name="message" rows="5" required></textarea>
+          </label>
+
+          <!-- Anti-spam -->
+          <input type="text" name="_honey" class="hp">
+
+          <button type="submit" class="btn primary full">Envoyer</button>
+          <p id="formMsg" class="form-msg"></p>
+          <p class="small muted">Vous restez sur le site : aucune redirection.</p>
+        </form>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="method" class="section light">
-  <div class="container">
-    <h2>Méthode</h2>
-    <div class="grid">
-      <div class="box">
-        <h3>1. Audit</h3>
-        <p>Analyse rapide du potentiel et de la concurrence.</p>
-      </div>
-      <div class="box">
-        <h3>2. Test</h3>
-        <p>Lancement d’une campagne pour valider les coûts.</p>
-      </div>
-      <div class="box">
-        <h3>3. Optimisation</h3>
-        <p>Amélioration continue si les résultats sont bons.</p>
+  <footer class="section light">
+    <div class="container" style="padding-top:20px;padding-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+        <div class="muted">© <span id="year"></span> HM Digital</div>
+        <div class="muted">hmdigital.contact@gmail.com • 06 17 25 53 64</div>
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<section id="contact" class="section">
-  <div class="container">
-    <h2>Contact</h2>
-    <p class="muted">Indiquez votre activité et votre ville. Je vous réponds rapidement.</p>
+  <button class="btn primary backTop" id="backTop" type="button">↑ Retour en haut</button>
 
-    <div class="contact-wrap">
-      <div class="box">
-        <h3 style="margin-top:0;">HM Digital</h3>
-        <div class="row"><span>📞</span><a href="tel:0617255364">06 17 25 53 64</a></div>
-        <div class="row"><span>✉️</span><a href="mailto:hmdigital.contact@gmail.com">hmdigital.contact@gmail.com</a></div>
-        <div class="row"><span>📍</span><span>France / Île-de-France</span></div>
-        <p class="small">Après l’appel, vous recevez un récapitulatif clair (objectif, budget, plan d’action).</p>
-      </div>
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-      <!-- IFRAME caché = submit FormSubmit sans quitter la page -->
-      <iframe name="hidden_iframe" style="display:none;"></iframe>
+    // Header brand = back to top
+    document.getElementById("brandTop").addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 
-      <form class="box"
-            method="POST"
-            action="https://formsubmit.co/hmdigital.contact@gmail.com"
-            target="hidden_iframe"
-            onsubmit="return showMessageAndReset();">
+    // Back to top button
+    const backTop = document.getElementById("backTop");
+    backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 500) backTop.classList.add("show");
+      else backTop.classList.remove("show");
+    });
 
-        <!-- FormSubmit options -->
-        <input type="hidden" name="_subject" value="Nouveau lead — HM Digital">
-        <input type="hidden" name="_captcha" value="false">
-        <!-- IMPORTANT : on évite une redirection -->
-        <input type="hidden" name="_next" value="https://example.com"> <!-- ignoré car iframe -->
+    // Reveal animations
+    const revealEls = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("is-visible");
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
 
-        <label>Nom / Entreprise
-          <input type="text" name="company" required>
-        </label>
-
-        <label>Ville
-          <input type="text" name="city" required>
-        </label>
-
-        <label>Objectif principal
-          <select name="goal" required>
-            <option value="">Choisissez</option>
-            <option>Recevoir plus d'appels</option>
-            <option>Recevoir plus de formulaires</option>
-            <option>Créer ou optimiser un site</option>
-            <option>Google Ads + Site</option>
-          </select>
-        </label>
-
-        <label>Téléphone
-          <input type="tel" name="phone">
-        </label>
-
-        <label>Email
-          <input type="email" name="email">
-        </label>
-
-        <label>Message
-          <textarea name="message" rows="5" required></textarea>
-        </label>
-
-        <!-- Anti-spam -->
-        <input type="text" name="_honey" class="hp">
-
-        <button type="submit" class="btn primary full">Envoyer</button>
-        <p id="formMsg" class="form-msg"></p>
-
-        <p class="small muted">Vous restez sur le site : aucune redirection.</p>
-      </form>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container footer-inner">
-    <div class="muted">© <span id="year"></span> HM Digital</div>
-    <div class="muted">hmdigital.contact@gmail.com • 06 17 25 53 64</div>
-  </div>
-</footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  function showMessageAndReset(){
-    const msg = document.getElementById("formMsg");
-    msg.textContent = "✅ Merci ! Votre demande a bien été envoyée. Je vous recontacte rapidement.";
-
-    // reset après 300ms (le POST part dans l’iframe)
-    setTimeout(() => {
-      const form = msg.closest("form");
-      if(form) form.reset();
-    }, 300);
-
-    // on laisse le submit se faire (vrai POST)
-    return true;
-  }
-</script>
-
+    // FormSubmit: message + reset (sans redirection)
+    function showMessageAndReset(){
+      const msg = document.getElementById("formMsg");
+      msg.textContent = "✅ Merci ! Votre demande a bien été envoyée. Je vous recontacte rapidement.";
+      setTimeout(() => {
+        const form = msg.closest("form");
+        if(form) form.reset();
+      }, 300);
+      return true; // laisse le POST partir dans l'iframe
+    }
+  </script>
 </body>
 </html>
