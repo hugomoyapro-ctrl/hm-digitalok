@@ -2,62 +2,102 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <!-- FAVICONS -->
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" href="/favicon.ico">
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
-
   <title>HM Digital — Google Ads & Sites web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FAVICONS (fichiers à la racine) -->
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 
   <style>
     /* ===== Reset ===== */
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
-      background:#f7f7f8;
-      color:#0f172a;
       font-family:Arial, Helvetica, sans-serif;
+      color:#0f172a;
       overflow-x:hidden;
+      background:#f7f8fb;
     }
     a{color:inherit;text-decoration:none}
     ul{margin:0}
-
     .container{max-width:1120px;margin:0 auto;padding:40px 20px}
     .muted{color:rgba(15,23,42,.65)}
     .small{font-size:13px;color:rgba(15,23,42,.62);margin-top:10px}
 
-    /* ===== Fond (léger, premium) ===== */
-    .bg{position:fixed;inset:0;pointer-events:none;z-index:-1}
-    .orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(30px);opacity:.18}
-    .orb.gold{right:-160px;top:-160px;background:radial-gradient(circle at 30% 30%, rgba(216,161,6,.9), transparent 60%)}
-    .orb.teal{left:-160px;bottom:-160px;background:radial-gradient(circle at 30% 30%, rgba(10,167,165,.85), transparent 60%)}
+    /* ===== Fond premium animé (sans dépendance) ===== */
+    .bg{
+      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(216,161,6,0.16), transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(16,167,165,0.16), transparent 45%),
+        radial-gradient(circle at 55% 10%, rgba(15,23,42,0.06), transparent 55%),
+        #f7f8fb;
+    }
+    .noise{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
+    .orb{
+      position:fixed; width:520px; height:520px; border-radius:50%;
+      filter:blur(40px); opacity:.22; z-index:-1; pointer-events:none;
+      animation: floaty 12s ease-in-out infinite;
+      transform: translate3d(0,0,0);
+    }
+    .orb.gold{
+      right:-180px; top:-180px;
+      background: radial-gradient(circle at 30% 30%, rgba(216,161,6,.9), transparent 60%);
+      animation-delay:-2s;
+    }
+    .orb.teal{
+      left:-180px; bottom:-180px;
+      background: radial-gradient(circle at 30% 30%, rgba(16,167,165,.85), transparent 60%);
+      animation-delay:-5s;
+    }
+    @keyframes floaty{
+      0%{transform:translate3d(0,0,0) scale(1)}
+      50%{transform:translate3d(18px,-14px,0) scale(1.04)}
+      100%{transform:translate3d(0,0,0) scale(1)}
+    }
 
     /* ===== Header ===== */
     header{
       position:sticky;top:0;z-index:50;
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.86);
       border-bottom:1px solid rgba(0,0,0,.08);
-      backdrop-filter:blur(10px);
+      backdrop-filter:blur(14px);
     }
-    .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;gap:12px;align-items:center;cursor:pointer}
+    .header-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;
+      gap:12px;
+    }
+    .brand{
+      display:flex;gap:12px;align-items:center;cursor:pointer;
+      user-select:none;
+    }
     .brand img{
       width:46px;height:46px;object-fit:contain;
       border-radius:12px;background:#fff;
       border:1px solid rgba(0,0,0,.08);
       padding:6px;
+      box-shadow:0 10px 28px rgba(0,0,0,.06);
     }
     .brand strong{font-size:18px;display:block;line-height:1.05}
     .brand span{display:block;font-size:12px;color:rgba(15,23,42,.62)}
 
     /* Menu PC */
     .nav-desktop{display:flex;align-items:center}
-    .nav-desktop a{margin-left:18px;font-weight:800;color:rgba(15,23,42,.78)}
-    .nav-desktop a:hover{color:rgba(15,23,42,1)}
+    .nav-desktop a{
+      margin-left:18px;font-weight:800;
+      color:rgba(15,23,42,.78);
+      transition:transform .12s ease, color .12s ease;
+    }
+    .nav-desktop a:hover{color:rgba(15,23,42,1);transform:translateY(-1px)}
 
     /* Boutons */
     .btn{
@@ -65,10 +105,11 @@
       padding:12px 16px;border-radius:14px;
       font-weight:800;border:1px solid rgba(0,0,0,.10);
       background:#fff;cursor:pointer;
-      transition:transform .15s ease;
+      transition:transform .15s ease, box-shadow .15s ease;
       user-select:none;
+      white-space:nowrap;
     }
-    .btn:hover{transform:translateY(-1px)}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
     .btn.primary{
       background:linear-gradient(135deg,#d8a106,#0aa7a5);
       color:#0f172a;border:1px solid rgba(0,0,0,.12);
@@ -77,22 +118,48 @@
     .btn.ghost{background:transparent}
     .btn.full{width:100%}
 
+    /* Zone actions à droite (mobile) */
+    .header-actions{
+      display:flex; align-items:center; gap:10px;
+    }
+
     /* Burger + menu mobile */
     .burger{
       display:none;
-      font-size:26px;
-      background:#fff;
+      font-size:22px;
+      background:rgba(255,255,255,.92);
       border:1px solid rgba(0,0,0,.10);
-      padding:8px 10px;
+      padding:10px 12px;
       border-radius:12px;
       cursor:pointer;
+      transition:transform .15s ease;
     }
+    .burger:hover{transform:translateY(-2px)}
+
+    /* Bouton Appeler dans le header (mobile) */
+    .call-header{
+      display:none; /* visible seulement mobile */
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:900;
+      border:1px solid rgba(0,0,0,.10);
+      background:linear-gradient(135deg, rgba(216,161,6,.18), rgba(10,167,165,.12));
+      box-shadow:0 14px 34px rgba(0,0,0,.08);
+    }
+
     .mobile-menu{
       display:none;
       flex-direction:column;
-      background:#ffffff;
+      background:rgba(255,255,255,.92);
       border-top:1px solid rgba(0,0,0,.08);
       padding:14px 20px 20px;
+      backdrop-filter:blur(14px);
+      transform-origin:top;
+      animation:menuIn .18s ease-out;
+    }
+    @keyframes menuIn{
+      from{opacity:0;transform:translateY(-6px)}
+      to{opacity:1;transform:translateY(0)}
     }
     .mobile-menu a{
       padding:12px 0;
@@ -119,26 +186,32 @@
     .lead{color:rgba(15,23,42,.72);line-height:1.75;max-width:62ch}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
 
-    /* Cards / boxes */
+    /* ===== Cards / boxes ===== */
     .card,.box{
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.92);
       border:1px solid rgba(0,0,0,.10);
-      border-radius:18px;
+      border-radius:20px;
       padding:22px;
-      box-shadow:0 18px 40px rgba(0,0,0,.07);
+      box-shadow:0 18px 50px rgba(0,0,0,.06);
+      backdrop-filter:blur(10px);
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+    .box:hover,.card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 26px 70px rgba(0,0,0,.09);
     }
     .card h3,.box h3{margin:0 0 10px}
     .card ul{padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
 
-    /* Sections */
+    /* ===== Sections ===== */
     .section{padding:40px 0}
     .section.light{
-      background:rgba(255,255,255,.75);
-      border-top:1px solid rgba(0,0,0,.06);
-      border-bottom:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.55);
+      border-top:1px solid rgba(0,0,0,.05);
+      border-bottom:1px solid rgba(0,0,0,.05);
+      backdrop-filter:blur(10px);
     }
     h2{font-size:32px;margin:0 0 14px}
-
     .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 
     /* Chips */
@@ -155,12 +228,15 @@
     /* 30 jours */
     .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px}
     .step{
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.92);
       border:1px solid rgba(0,0,0,.10);
-      border-radius:16px;
+      border-radius:18px;
       padding:18px;
-      box-shadow:0 18px 40px rgba(0,0,0,.07);
+      box-shadow:0 18px 50px rgba(0,0,0,.06);
+      backdrop-filter:blur(10px);
+      transition:transform .22s ease, box-shadow .22s ease;
     }
+    .step:hover{transform:translateY(-5px);box-shadow:0 26px 70px rgba(0,0,0,.09)}
     .kpi{
       width:44px;height:44px;border-radius:14px;
       display:grid;place-items:center;
@@ -198,7 +274,9 @@
     input,select,textarea{
       width:100%;margin-top:6px;padding:12px 12px;
       border-radius:12px;border:1px solid rgba(0,0,0,.14);
-      background:#fff;font-family:inherit;font-size:14px;outline:none;
+      background:rgba(255,255,255,.96);
+      font-family:inherit;font-size:14px;outline:none;
+      transition:box-shadow .15s ease, border-color .15s ease;
     }
     textarea{min-height:120px;resize:vertical}
     input:focus,select:focus,textarea:focus{
@@ -211,14 +289,29 @@
     /* Bouton Retour */
     .backTop{
       position:fixed;right:18px;bottom:18px;z-index:60;
-      opacity:0;pointer-events:none;transform:translateY(8px);
-      transition:.2s ease;
+      opacity:0;pointer-events:none;transform:translateY(10px);
+      transition:.22s ease;
     }
     .backTop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 
-    /* Animations */
-    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
-    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    /* ===== Animations premium (reveal) =====
+       Effet : apparition douce + léger blur qui disparaît */
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      filter:blur(6px);
+      transition:opacity .75s ease, transform .75s ease, filter .75s ease;
+      will-change:opacity,transform,filter;
+    }
+    .reveal.is-visible{
+      opacity:1;
+      transform:translateY(0);
+      filter:blur(0);
+    }
+    .delay-1{transition-delay:.06s}
+    .delay-2{transition-delay:.12s}
+    .delay-3{transition-delay:.18s}
+    .delay-4{transition-delay:.24s}
 
     /* Responsive */
     @media (max-width:980px){
@@ -231,15 +324,16 @@
 
       .nav-desktop{display:none}
       .burger{display:block}
+      .call-header{display:inline-flex;align-items:center;justify-content:center}
     }
   </style>
 </head>
 
 <body>
-  <div class="bg" aria-hidden="true">
-    <div class="orb gold"></div>
-    <div class="orb teal"></div>
-  </div>
+  <div class="bg"></div>
+  <div class="noise"></div>
+  <div class="orb gold"></div>
+  <div class="orb teal"></div>
 
   <header>
     <div class="container header-inner">
@@ -261,8 +355,11 @@
         <a href="#contact" class="btn">Contact</a>
       </nav>
 
-      <!-- Menu mobile -->
-      <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">☰</button>
+      <!-- Actions à droite (mobile) -->
+      <div class="header-actions">
+        <a class="call-header" href="tel:0617255364" aria-label="Appeler HM Digital">📞</a>
+        <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">☰</button>
+      </div>
     </div>
 
     <div class="mobile-menu" id="mobileMenu">
@@ -275,6 +372,7 @@
     </div>
   </header>
 
+  <!-- HERO -->
   <section class="hero reveal" id="top">
     <div class="container hero-inner">
       <div class="reveal">
@@ -293,7 +391,7 @@
         <p class="small">📍 Intervention : <strong>Toute la France</strong></p>
       </div>
 
-      <div class="card reveal">
+      <div class="card reveal delay-1">
         <h3>Approche</h3>
         <ul>
           <li>Campagnes Google Ads orientées appels et demandes</li>
@@ -305,21 +403,22 @@
     </div>
   </section>
 
+  <!-- SERVICES -->
   <section id="services" class="section reveal">
     <div class="container">
       <h2>Services</h2>
       <p class="muted">Une offre courte, premium et orientée résultats pour les entreprises locales.</p>
 
       <div class="grid3">
-        <div class="box reveal">
+        <div class="box reveal delay-1">
           <h3>Google Ads</h3>
-          <p>Génération d’appels et de demandes qualifiées via Google (Search / Local).</p>
+          <p>Génération d’appels et de demandes qualifiées via Google.</p>
         </div>
-        <div class="box reveal">
+        <div class="box reveal delay-2">
           <h3>Site / Landing</h3>
           <p>Pages optimisées conversion : rassurance, vitesse, CTA, formulaire.</p>
         </div>
-        <div class="box reveal">
+        <div class="box reveal delay-3">
           <h3>Suivi</h3>
           <p>Optimisations continues et lecture claire des performances.</p>
         </div>
@@ -327,6 +426,7 @@
     </div>
   </section>
 
+  <!-- POUR QUI -->
   <section id="forwho" class="section light reveal">
     <div class="container">
       <h2>Pour qui ?</h2>
@@ -349,21 +449,22 @@
     </div>
   </section>
 
+  <!-- METHODE -->
   <section id="method" class="section light reveal">
     <div class="container">
       <h2>Méthode</h2>
       <p class="muted">Une méthode simple et efficace, applicable à toute activité locale.</p>
 
       <div class="grid3">
-        <div class="box reveal">
+        <div class="box reveal delay-1">
           <h3>1. Audit</h3>
           <p>Analyse du potentiel, de la concurrence et des objectifs.</p>
         </div>
-        <div class="box reveal">
+        <div class="box reveal delay-2">
           <h3>2. Test</h3>
           <p>Lancement contrôlé pour valider coût / lead et qualité des demandes.</p>
         </div>
-        <div class="box reveal">
+        <div class="box reveal delay-3">
           <h3>3. Optimisation</h3>
           <p>Amélioration continue, puis montée progressive si rentable.</p>
         </div>
@@ -371,28 +472,29 @@
     </div>
   </section>
 
+  <!-- 30 JOURS -->
   <section id="days30" class="section reveal">
     <div class="container">
       <h2>Ce que vous obtenez en 30 jours</h2>
       <p class="muted">Un plan clair, des campagnes propres, et des décisions basées sur des données.</p>
 
       <div class="timeline">
-        <div class="step reveal">
+        <div class="step reveal delay-1">
           <div class="kpi">S1</div>
           <h3>Structure propre</h3>
           <p class="muted">Mots-clés, annonces, ciblage géographique, extensions, suivi.</p>
         </div>
-        <div class="step reveal">
+        <div class="step reveal delay-2">
           <div class="kpi">S2</div>
           <h3>Données + ajustements</h3>
           <p class="muted">On coupe ce qui ne marche pas, on renforce ce qui performe.</p>
         </div>
-        <div class="step reveal">
+        <div class="step reveal delay-3">
           <div class="kpi">S3</div>
           <h3>Optimisation conversion</h3>
           <p class="muted">Amélioration des annonces et de la page (CTA, rassurance, vitesse).</p>
         </div>
-        <div class="step reveal">
+        <div class="step reveal delay-4">
           <div class="kpi">S4</div>
           <h3>Plan pour scaler</h3>
           <p class="muted">Lecture claire + stratégie : stabiliser puis augmenter progressivement.</p>
@@ -405,13 +507,14 @@
     </div>
   </section>
 
+  <!-- OFFRES -->
   <section id="offers" class="section light reveal">
     <div class="container">
       <h2>Formules</h2>
       <p class="muted">Gestion Google Ads claire et orientée résultats. Le budget publicitaire est payé directement à Google.</p>
 
       <div class="pricing">
-        <div class="box priceCard reveal">
+        <div class="box priceCard reveal delay-1">
           <div class="priceTag">Démarrage</div>
           <h3>Pack Lancement</h3>
           <div class="price">300 € <span class="muted">/ mois</span></div>
@@ -422,10 +525,10 @@
             <li>Reporting simple</li>
           </ul>
           <p class="small muted">Idéal pour démarrer sur 1 activité / 1 zone.</p>
-          <a class="btn primary full" href="#contact">Demander un devis</a>
+          <a class="btn primary full" href="#contact">Demander une proposition</a>
         </div>
 
-        <div class="box priceCard featured reveal">
+        <div class="box priceCard featured reveal delay-2">
           <div class="priceTag">Multi-sites</div>
           <h3>Pack Réseau</h3>
           <div class="price">250 € <span class="muted">/ mois / site</span></div>
@@ -436,10 +539,10 @@
             <li>Suivi par site ou entité</li>
           </ul>
           <p class="small muted">Tarif préférentiel à partir de plusieurs sites ou zones.</p>
-          <a class="btn primary full" href="#contact">Demander un devis</a>
+          <a class="btn primary full" href="#contact">Voir l’offre réseau</a>
         </div>
 
-        <div class="box priceCard reveal">
+        <div class="box priceCard reveal delay-3">
           <div class="priceTag">Option</div>
           <h3>Landing / Site</h3>
           <div class="price">Sur devis</div>
@@ -460,6 +563,7 @@
     </div>
   </section>
 
+  <!-- CONTACT -->
   <section id="contact" class="section reveal">
     <div class="container">
       <h2>Contact</h2>
@@ -474,7 +578,6 @@
           <p class="small muted">Après l’appel, vous recevez un récapitulatif clair (objectif, budget, plan d’action).</p>
         </div>
 
-        <!-- IFRAME caché = envoi sans redirection -->
         <iframe name="hidden_iframe" style="display:none;"></iframe>
 
         <form class="box reveal"
@@ -516,7 +619,6 @@
             <textarea name="Message" required></textarea>
           </label>
 
-          <!-- Anti-spam -->
           <input type="text" name="_honey" class="hp">
 
           <button type="submit" class="btn primary full">Envoyer</button>
@@ -563,18 +665,20 @@
     burger.addEventListener("click", function(){
       menu.classList.toggle("show");
     });
-    var links = document.querySelectorAll(".mobile-menu a");
-    for (var i=0; i<links.length; i++){
-      links[i].addEventListener("click", function(){
+    document.querySelectorAll(".mobile-menu a").forEach(function(link){
+      link.addEventListener("click", function(){
         menu.classList.remove("show");
       });
-    }
+    });
 
-    // Animations reveal
+    // Animations reveal (premium)
     var revealEls = document.querySelectorAll(".reveal");
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if(entry.isIntersecting) entry.target.classList.add("is-visible");
+        if(entry.isIntersecting){
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
       });
     }, { threshold: 0.12 });
     revealEls.forEach(function(el){ io.observe(el); });
