@@ -82,7 +82,12 @@
     /* ===== Header ===== */
     header{
       position:sticky;top:0;z-index:50;
-      background:linear-gradient(135deg, rgba(216,161,6,.18), rgba(10,167,165,.12), rgba(255,255,255,.70));
+      /* ✅ HEADER COLORÉ PREMIUM */
+      background:linear-gradient(135deg,
+        rgba(216,161,6,.20),
+        rgba(10,167,165,.14),
+        rgba(255,255,255,.78)
+      );
       border-bottom:1px solid rgba(0,0,0,.08);
       backdrop-filter:blur(14px);
     }
@@ -97,7 +102,7 @@
       user-select:none;
     }
 
-    /* ✅ LOGO FONDU PREMIUM */
+    /* ✅ LOGO FONDU PREMIUM (sans carré) */
     .brand-logo{
       width:64px;
       height:64px;
@@ -194,6 +199,11 @@
       border:1px solid rgba(0,0,0,.10);
       background:linear-gradient(135deg, rgba(216,161,6,.22), rgba(10,167,165,.16));
       box-shadow:0 14px 34px rgba(0,0,0,.10);
+      /* ✅ UNE SEULE LIGNE */
+      white-space:nowrap;
+      flex-wrap:nowrap;
+      justify-content:center;
+      min-width:120px;
     }
 
     .mobile-menu{
@@ -367,17 +377,11 @@
       .brand-logo{width:70px;height:70px}
       .brand-logo img{width:70px;height:70px}
 
-      /* ✅ mobile : logo un peu plus à droite + burger moins collé à droite */
-      .header-inner{
-        padding-left:18px;
-        padding-right:18px;
-      }
-      .brand{
-        margin-left:10px;
-      }
-      .header-actions{
-        margin-right:10px;
-      }
+      /* ✅ LOGO un peu + à droite (moins collé à gauche) */
+      .brand{margin-left:10px}
+
+      /* ✅ BURGER un peu moins à droite */
+      .header-actions{margin-right:10px}
     }
   </style>
 </head>
