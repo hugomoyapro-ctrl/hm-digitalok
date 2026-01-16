@@ -2,10 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>HM Digital — Google Ads & Sites Web</title>
+  <title>HM Digital — Google Ads & Sites web</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ===== Reset ===== */
@@ -14,35 +12,28 @@
     body{
       background:#f7f7f8;
       color:#0f172a;
-      font-family:Inter,Arial,sans-serif;
+      font-family:Arial, Helvetica, sans-serif;
       overflow-x:hidden;
     }
     a{color:inherit;text-decoration:none}
     ul{margin:0}
-    .container{max-width:1120px;margin:0 auto;padding:40px 20px}
 
-    /* ===== Background decor ===== */
+    .container{max-width:1120px;margin:0 auto;padding:40px 20px}
+    .muted{color:rgba(15,23,42,.65)}
+    .small{font-size:13px;color:rgba(15,23,42,.62);margin-top:10px}
+
+    /* ===== Fond (léger, premium) ===== */
     .bg{position:fixed;inset:0;pointer-events:none;z-index:-1}
-    .orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(30px);opacity:.22}
+    .orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(30px);opacity:.18}
     .orb.gold{right:-160px;top:-160px;background:radial-gradient(circle at 30% 30%, rgba(216,161,6,.9), transparent 60%)}
     .orb.teal{left:-160px;bottom:-160px;background:radial-gradient(circle at 30% 30%, rgba(10,167,165,.85), transparent 60%)}
-    .grid{
-      position:absolute;inset:-2px;opacity:.32;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(216,161,6,.12), transparent 40%),
-        radial-gradient(circle at 80% 90%, rgba(10,167,165,.10), transparent 40%),
-        linear-gradient(rgba(15,23,42,.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15,23,42,.06) 1px, transparent 1px);
-      background-size:auto,auto,70px 70px,70px 70px;
-      mask-image: radial-gradient(circle at 50% 20%, black 35%, transparent 70%);
-    }
 
     /* ===== Header ===== */
     header{
       position:sticky;top:0;z-index:50;
-      background:rgba(255,255,255,.88);
-      backdrop-filter:blur(12px);
+      background:rgba(255,255,255,.92);
       border-bottom:1px solid rgba(0,0,0,.08);
+      backdrop-filter:blur(10px);
     }
     .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
     .brand{display:flex;gap:12px;align-items:center;cursor:pointer}
@@ -52,23 +43,24 @@
       border:1px solid rgba(0,0,0,.08);
       padding:6px;
     }
-    .brand strong{font-family:"Playfair Display",serif;font-size:18px;display:block;line-height:1.05}
+    .brand strong{font-size:18px;display:block;line-height:1.05}
     .brand span{display:block;font-size:12px;color:rgba(15,23,42,.62)}
-    nav a{margin-left:18px;font-weight:800;color:rgba(15,23,42,.78)}
-    nav a:hover{color:rgba(15,23,42,1)}
-    .navBtn{margin-left:18px}
 
-    /* ===== Buttons ===== */
+    /* Menu PC */
+    .nav-desktop{display:flex;align-items:center}
+    .nav-desktop a{margin-left:18px;font-weight:800;color:rgba(15,23,42,.78)}
+    .nav-desktop a:hover{color:rgba(15,23,42,1)}
+
+    /* Boutons */
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
       padding:12px 16px;border-radius:14px;
-      font-weight:900;border:1px solid rgba(0,0,0,.10);
+      font-weight:800;border:1px solid rgba(0,0,0,.10);
       background:#fff;cursor:pointer;
-      transition:transform .15s ease, filter .15s ease, background .15s ease;
+      transition:transform .15s ease;
       user-select:none;
     }
     .btn:hover{transform:translateY(-1px)}
-    .btn:active{transform:translateY(0px)}
     .btn.primary{
       background:linear-gradient(135deg,#d8a106,#0aa7a5);
       color:#0f172a;border:1px solid rgba(0,0,0,.12);
@@ -77,103 +69,85 @@
     .btn.ghost{background:transparent}
     .btn.full{width:100%}
 
+    /* Burger + menu mobile */
+    .burger{
+      display:none;
+      font-size:26px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.10);
+      padding:8px 10px;
+      border-radius:12px;
+      cursor:pointer;
+    }
+    .mobile-menu{
+      display:none;
+      flex-direction:column;
+      background:#ffffff;
+      border-top:1px solid rgba(0,0,0,.08);
+      padding:14px 20px 20px;
+    }
+    .mobile-menu a{
+      padding:12px 0;
+      font-weight:800;
+      border-bottom:1px solid rgba(0,0,0,.06);
+      color:rgba(15,23,42,.85);
+    }
+    .mobile-menu a:last-child{border-bottom:none}
+    .mobile-menu.show{display:flex}
+
     /* ===== Hero ===== */
     .hero{padding:30px 0 10px}
     .hero-inner{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start}
     .pill{
       display:inline-flex;align-items:center;gap:10px;
       padding:10px 12px;border-radius:999px;
-      background:rgba(255,255,255,.88);
+      background:rgba(255,255,255,.92);
       border:1px solid rgba(0,0,0,.08);
       color:rgba(15,23,42,.68);
       font-size:13px;width:fit-content;
     }
     .dot{width:8px;height:8px;border-radius:50%;background:#d8a106;box-shadow:0 0 0 4px rgba(216,161,6,.18)}
-    h1{
-      font-family:"Playfair Display",serif;
-      font-size:clamp(34px,4vw,54px);
-      line-height:1.05;margin:16px 0 10px;letter-spacing:.2px;
-    }
-    .accent{
-      background:linear-gradient(135deg,#b88700,#0e7c7b);
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
+    h1{font-size:44px;line-height:1.05;margin:16px 0 10px}
     .lead{color:rgba(15,23,42,.72);line-height:1.75;max-width:62ch}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
 
-    /* ===== Cards ===== */
-    .card{
-      background:rgba(255,255,255,.92);
+    /* Cards / boxes */
+    .card,.box{
+      background:rgba(255,255,255,.95);
       border:1px solid rgba(0,0,0,.10);
       border-radius:18px;
       padding:22px;
-      box-shadow:0 20px 50px rgba(0,0,0,.08);
-      position:relative;overflow:hidden;
+      box-shadow:0 18px 40px rgba(0,0,0,.07);
     }
-    .card.glow:before{
-      content:"";position:absolute;inset:-2px;pointer-events:none;
-      background:radial-gradient(circle at 20% 10%, rgba(216,161,6,.18), transparent 45%),
-                 radial-gradient(circle at 80% 90%, rgba(10,167,165,.14), transparent 45%);
-    }
-    .card>*{position:relative}
-    .card h3{margin:0 0 10px}
+    .card h3,.box h3{margin:0 0 10px}
     .card ul{padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
-    .small{font-size:13px;color:rgba(15,23,42,.62);margin-top:10px}
-    .muted{color:rgba(15,23,42,.62)}
 
-    /* ===== Sections ===== */
+    /* Sections */
     .section{padding:40px 0}
     .section.light{
-      background:rgba(255,255,255,.72);
+      background:rgba(255,255,255,.75);
       border-top:1px solid rgba(0,0,0,.06);
       border-bottom:1px solid rgba(0,0,0,.06);
     }
-    h2{font-family:"Playfair Display",serif;font-size:34px;margin:0 0 14px}
+    h2{font-size:32px;margin:0 0 14px}
+
     .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 
-    .box{
-      background:rgba(255,255,255,.92);
-      border:1px solid rgba(0,0,0,.10);
-      border-radius:16px;
-      padding:18px;
-      box-shadow:0 18px 40px rgba(0,0,0,.07);
-    }
-    .box h3{margin:0 0 8px}
-    .box p{margin:0;color:rgba(15,23,42,.72);line-height:1.65}
-
-    /* ===== Pricing ===== */
-    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
-    .priceTag{
-      display:inline-block;font-size:12px;font-weight:900;
-      padding:8px 10px;border-radius:999px;
-      background:rgba(15,23,42,.06);
-      border:1px solid rgba(0,0,0,.08);
-      margin-bottom:10px;
-    }
-    .price{
-      font-size:32px;font-weight:900;margin:10px 0 10px;letter-spacing:.2px;
-    }
-    .priceCard ul{padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
-    .priceCard.featured{
-      border-color:rgba(216,161,6,.35);
-      background:linear-gradient(180deg, rgba(216,161,6,.10), rgba(10,167,165,.06));
-    }
-
-    /* ===== "Pour qui" tags ===== */
+    /* Chips */
     .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
     .chip{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;border-radius:999px;
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.95);
       border:1px solid rgba(0,0,0,.10);
       box-shadow:0 10px 25px rgba(0,0,0,.06);
       font-weight:800;font-size:13px;color:rgba(15,23,42,.78)
     }
 
-    /* ===== 30 jours ===== */
+    /* 30 jours */
     .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px}
     .step{
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.95);
       border:1px solid rgba(0,0,0,.10);
       border-radius:16px;
       padding:18px;
@@ -188,10 +162,27 @@
       margin-bottom:10px;
     }
 
-    /* ===== Contact ===== */
+    /* Pricing */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
+    .priceTag{
+      display:inline-block;font-size:12px;font-weight:900;
+      padding:8px 10px;border-radius:999px;
+      background:rgba(15,23,42,.06);
+      border:1px solid rgba(0,0,0,.08);
+      margin-bottom:10px;
+    }
+    .price{font-size:30px;font-weight:900;margin:10px 0}
+    .priceCard ul{padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
+    .featured{
+      background:linear-gradient(180deg, rgba(216,161,6,.10), rgba(10,167,165,.06));
+      border-color:rgba(216,161,6,.35);
+    }
+
+    /* Contact */
     .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
     .row{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06)}
     .row:last-child{border-bottom:none}
+
     form label{
       display:block;font-size:13px;font-weight:900;color:rgba(15,23,42,.72);
       margin-bottom:12px;
@@ -201,6 +192,7 @@
       border-radius:12px;border:1px solid rgba(0,0,0,.14);
       background:#fff;font-family:inherit;font-size:14px;outline:none;
     }
+    textarea{min-height:120px;resize:vertical}
     input:focus,select:focus,textarea:focus{
       border-color:rgba(216,161,6,.75);
       box-shadow:0 0 0 3px rgba(216,161,6,.18);
@@ -208,7 +200,7 @@
     .hp{display:none}
     .form-msg{margin-top:12px;color:#0e7c7b;font-weight:900}
 
-    /* ===== Back to top ===== */
+    /* Bouton Retour */
     .backTop{
       position:fixed;right:18px;bottom:18px;z-index:60;
       opacity:0;pointer-events:none;transform:translateY(8px);
@@ -216,18 +208,21 @@
     }
     .backTop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 
-    /* ===== Animations (reveal) ===== */
+    /* Animations */
     .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
     .reveal.is-visible{opacity:1;transform:translateY(0)}
 
-    /* ===== Responsive ===== */
+    /* Responsive */
     @media (max-width:980px){
+      h1{font-size:36px}
       .hero-inner{grid-template-columns:1fr}
       .grid3{grid-template-columns:1fr}
       .pricing{grid-template-columns:1fr}
       .contact-wrap{grid-template-columns:1fr}
       .timeline{grid-template-columns:1fr}
-      nav{display:none}
+
+      .nav-desktop{display:none}
+      .burger{display:block}
     }
   </style>
 </head>
@@ -236,7 +231,6 @@
   <div class="bg" aria-hidden="true">
     <div class="orb gold"></div>
     <div class="orb teal"></div>
-    <div class="grid"></div>
   </div>
 
   <header>
@@ -249,22 +243,35 @@
         </div>
       </div>
 
-      <nav>
+      <!-- Menu PC -->
+      <nav class="nav-desktop">
         <a href="#services">Services</a>
         <a href="#forwho">Pour qui ?</a>
         <a href="#method">Méthode</a>
         <a href="#days30">30 jours</a>
         <a href="#offers">Formules</a>
-        <a href="#contact" class="btn navBtn">Contact</a>
+        <a href="#contact" class="btn">Contact</a>
       </nav>
+
+      <!-- Menu mobile -->
+      <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">☰</button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#services">Services</a>
+      <a href="#forwho">Pour qui ?</a>
+      <a href="#method">Méthode</a>
+      <a href="#days30">30 jours</a>
+      <a href="#offers">Formules</a>
+      <a href="#contact" class="btn full">Contact</a>
     </div>
   </header>
 
   <section class="hero reveal" id="top">
     <div class="container hero-inner">
       <div class="reveal">
-        <div class="pill"><span class="dot"></span> Acquisition locale premium • Budget maîtrisé • Suivi clair</div>
-        <h1>Générez plus d’appels<br>avec <span class="accent">Google Ads</span> & un site qui convertit.</h1>
+        <div class="pill"><span class="dot"></span> Acquisition locale • Budget maîtrisé • Suivi clair</div>
+        <h1>Générez plus d’appels avec Google Ads</h1>
         <p class="lead">
           HM Digital accompagne les entreprises locales partout en France avec une approche simple :
           attirer (Google Ads) → convertir (site) → mesurer (suivi).
@@ -278,14 +285,14 @@
         <p class="small">📍 Intervention : <strong>Toute la France</strong></p>
       </div>
 
-      <div class="card glow reveal">
+      <div class="card reveal">
         <h3>Approche</h3>
         <ul>
           <li>Campagnes Google Ads orientées appels et demandes</li>
           <li>Pages / site optimisés conversion (CTA, rassurance, vitesse)</li>
           <li>Suivi simple + optimisations continues</li>
         </ul>
-        <p class="small">Transparence : le budget publicité est payé directement à Google.</p>
+        <p class="small">Transparence : le budget publicitaire est payé directement à Google.</p>
       </div>
     </div>
   </section>
@@ -306,13 +313,12 @@
         </div>
         <div class="box reveal">
           <h3>Suivi</h3>
-          <p>Lecture simple des performances et optimisations continues.</p>
+          <p>Optimisations continues et lecture claire des performances.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== Pour qui ? ===== -->
   <section id="forwho" class="section light reveal">
     <div class="container">
       <h2>Pour qui ?</h2>
@@ -330,7 +336,7 @@
       </div>
 
       <p class="small muted" style="margin-top:14px;">
-        Objectif : apparaître au bon moment quand un client cherche votre service, et transformer ce clic en appel ou en message.
+        Objectif : apparaître au bon moment quand un client cherche votre service, et transformer ce clic en appel ou message.
       </p>
     </div>
   </section>
@@ -343,7 +349,7 @@
       <div class="grid3">
         <div class="box reveal">
           <h3>1. Audit</h3>
-          <p>Analyse rapide du potentiel, de la concurrence et des objectifs.</p>
+          <p>Analyse du potentiel, de la concurrence et des objectifs.</p>
         </div>
         <div class="box reveal">
           <h3>2. Test</h3>
@@ -357,7 +363,6 @@
     </div>
   </section>
 
-  <!-- ===== 30 jours ===== -->
   <section id="days30" class="section reveal">
     <div class="container">
       <h2>Ce que vous obtenez en 30 jours</h2>
@@ -366,8 +371,8 @@
       <div class="timeline">
         <div class="step reveal">
           <div class="kpi">S1</div>
-          <h3>Structure professionelle</h3>
-          <p class="muted">Mots-clés, annonces, ciblage géographique, extensions, tracking.</p>
+          <h3>Structure propre</h3>
+          <p class="muted">Mots-clés, annonces, ciblage géographique, extensions, suivi.</p>
         </div>
         <div class="step reveal">
           <div class="kpi">S2</div>
@@ -387,7 +392,7 @@
       </div>
 
       <p class="small muted" style="margin-top:14px;">
-        💡 Le but n’est pas “d’être visible”, mais de générer des demandes rentables et mesurables.
+        💡 Le but n’est pas d’être visible, mais de générer des demandes rentables et mesurables.
       </p>
     </div>
   </section>
@@ -395,18 +400,18 @@
   <section id="offers" class="section light reveal">
     <div class="container">
       <h2>Formules</h2>
-      <p class="muted">Gestion Google Ads claire, simple et orientée résultats. Le budget publicitaire est payé directement à Google.</p>
+      <p class="muted">Gestion Google Ads claire et orientée résultats. Le budget publicitaire est payé directement à Google.</p>
 
       <div class="pricing">
         <div class="box priceCard reveal">
           <div class="priceTag">Démarrage</div>
           <h3>Pack Lancement</h3>
-          <div class="price">300€ <span class="muted">/ mois</span></div>
+          <div class="price">300 € <span class="muted">/ mois</span></div>
           <ul>
             <li>Création / structuration des campagnes</li>
-            <li>Tracking appels & conversions</li>
+            <li>Suivi appels & conversions</li>
             <li>Optimisations régulières</li>
-            <li>Reporting simple (ce qui marche / à améliorer)</li>
+            <li>Reporting simple</li>
           </ul>
           <p class="small muted">Idéal pour démarrer sur 1 activité / 1 zone.</p>
           <a class="btn primary full" href="#contact">Demander une proposition</a>
@@ -415,12 +420,12 @@
         <div class="box priceCard featured reveal">
           <div class="priceTag">Multi-sites</div>
           <h3>Pack Réseau</h3>
-          <div class="price">250€ <span class="muted">/ mois / site</span></div>
+          <div class="price">250 € <span class="muted">/ mois / site</span></div>
           <ul>
             <li>Campagnes dédiées par activité ou zone</li>
             <li>Ciblage géographique précis</li>
             <li>Optimisations continues</li>
-            <li>Suivi et lecture par site ou entité</li>
+            <li>Suivi par site ou entité</li>
           </ul>
           <p class="small muted">Tarif préférentiel à partir de plusieurs sites ou zones.</p>
           <a class="btn primary full" href="#contact">Voir l’offre réseau</a>
@@ -442,7 +447,7 @@
       </div>
 
       <p class="small muted" style="margin-top:14px;">
-        💡 Le budget publicitaire est séparé : vous payez Google directement (contrôle total). HM Digital facture la gestion.
+        💡 Budget pub séparé : vous payez Google directement (contrôle total). HM Digital facture la gestion.
       </p>
     </div>
   </section>
@@ -461,7 +466,7 @@
           <p class="small muted">Après l’appel, vous recevez un récapitulatif clair (objectif, budget, plan d’action).</p>
         </div>
 
-        <!-- IFRAME caché = submit sans redirection -->
+        <!-- IFRAME caché = envoi sans redirection -->
         <iframe name="hidden_iframe" style="display:none;"></iframe>
 
         <form class="box reveal"
@@ -470,22 +475,21 @@
               target="hidden_iframe"
               onsubmit="return showMessageAndReset();">
 
-          <!-- Options FormSubmit -->
-          <input type="hidden" name="_subject" value="Nouveau lead — HM Digital">
+          <input type="hidden" name="_subject" value="Nouveau contact — HM Digital">
           <input type="hidden" name="_captcha" value="false">
 
           <label>Nom / Entreprise
-            <input type="text" name="company" required>
+            <input type="text" name="Nom" required>
           </label>
 
           <label>Ville
-            <input type="text" name="city" required>
+            <input type="text" name="Ville" required>
           </label>
 
           <label>Objectif principal
-            <select name="goal" required>
+            <select name="Objectif" required>
               <option value="">Choisissez</option>
-              <option>Recevoir plus d'appels</option>
+              <option>Recevoir plus d’appels</option>
               <option>Recevoir plus de formulaires</option>
               <option>Créer ou optimiser un site</option>
               <option>Google Ads + Site</option>
@@ -493,15 +497,15 @@
           </label>
 
           <label>Téléphone
-            <input type="tel" name="phone">
+            <input type="tel" name="Téléphone">
           </label>
 
           <label>Email
-            <input type="email" name="email">
+            <input type="email" name="Email">
           </label>
 
           <label>Message
-            <textarea name="message" rows="5" required></textarea>
+            <textarea name="Message" required></textarea>
           </label>
 
           <!-- Anti-spam -->
@@ -527,40 +531,55 @@
   <button class="btn primary backTop" id="backTop" type="button">↑ Retour en haut</button>
 
   <script>
-    // Year
+    // Année
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Header brand = back to top
-    document.getElementById("brandTop").addEventListener("click", () => {
+    // Logo = retour en haut
+    document.getElementById("brandTop").addEventListener("click", function(){
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    // Back to top button
-    const backTop = document.getElementById("backTop");
-    backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-    window.addEventListener("scroll", () => {
+    // Bouton retour en haut
+    var backTop = document.getElementById("backTop");
+    backTop.addEventListener("click", function(){
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    window.addEventListener("scroll", function(){
       if (window.scrollY > 500) backTop.classList.add("show");
       else backTop.classList.remove("show");
     });
 
-    // Reveal animations
-    const revealEls = document.querySelectorAll(".reveal");
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add("is-visible");
+    // Menu mobile
+    var burger = document.getElementById("burgerBtn");
+    var menu = document.getElementById("mobileMenu");
+    burger.addEventListener("click", function(){
+      menu.classList.toggle("show");
+    });
+    var links = document.querySelectorAll(".mobile-menu a");
+    for (var i=0; i<links.length; i++){
+      links[i].addEventListener("click", function(){
+        menu.classList.remove("show");
+      });
+    }
+
+    // Animations reveal
+    var revealEls = document.querySelectorAll(".reveal");
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting) entry.target.classList.add("is-visible");
       });
     }, { threshold: 0.12 });
-    revealEls.forEach(el => io.observe(el));
+    revealEls.forEach(function(el){ io.observe(el); });
 
-    // FormSubmit: message + reset (sans redirection)
+    // FormSubmit : message + reset (sans redirection)
     function showMessageAndReset(){
-      const msg = document.getElementById("formMsg");
+      var msg = document.getElementById("formMsg");
       msg.textContent = "✅ Merci ! Votre demande a bien été envoyée. Je vous recontacte rapidement.";
-      setTimeout(() => {
-        const form = msg.closest("form");
+      setTimeout(function(){
+        var form = msg.closest("form");
         if(form) form.reset();
       }, 300);
-      return true; // laisse le POST partir dans l'iframe
+      return true;
     }
   </script>
 </body>
