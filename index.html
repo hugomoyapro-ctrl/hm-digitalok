@@ -79,14 +79,10 @@
       to{transform:translateX(20%)}
     }
 
-    /* ===== Layout / éléments ===== */
-    .muted{color:rgba(15,23,42,.65)}
-    .small{font-size:13px;color:rgba(15,23,42,.62);margin-top:10px}
-
     /* ===== Header ===== */
     header{
       position:sticky;top:0;z-index:50;
-      background:rgba(255,255,255,.86);
+      background:linear-gradient(135deg, rgba(216,161,6,.18), rgba(10,167,165,.12), rgba(255,255,255,.70));
       border-bottom:1px solid rgba(0,0,0,.08);
       backdrop-filter:blur(14px);
     }
@@ -101,7 +97,7 @@
       user-select:none;
     }
 
-    /* ✅ LOGO FONDU PREMIUM (sans carré) */
+    /* ✅ LOGO FONDU PREMIUM */
     .brand-logo{
       width:64px;
       height:64px;
@@ -370,6 +366,18 @@
 
       .brand-logo{width:70px;height:70px}
       .brand-logo img{width:70px;height:70px}
+
+      /* ✅ mobile : logo un peu plus à droite + burger moins collé à droite */
+      .header-inner{
+        padding-left:18px;
+        padding-right:18px;
+      }
+      .brand{
+        margin-left:10px;
+      }
+      .header-actions{
+        margin-right:10px;
+      }
     }
   </style>
 </head>
