@@ -20,7 +20,7 @@
       font-family:Arial, Helvetica, sans-serif;
       color:#0f172a;
       overflow-x:hidden;
-      background:#f7f8fb;
+      background:#f4f7fb;
     }
     a{color:inherit;text-decoration:none}
     ul{margin:0}
@@ -28,79 +28,65 @@
     .muted{color:rgba(15,23,42,.65)}
     .small{font-size:13px;color:rgba(15,23,42,.62);margin-top:10px}
 
-    /* ===== Fond animé (vagues visibles) ===== */
-    .fond-anime{
+    /* ===== Fond animé ultra visible ===== */
+    .bg-anim{
       position:fixed;
       inset:0;
-      z-index:-3;
+      z-index:-10;
       pointer-events:none;
       overflow:hidden;
-
-      background:
-        radial-gradient(900px 600px at 15% 15%, rgba(216,161,6,.28), transparent 60%),
-        radial-gradient(900px 600px at 85% 75%, rgba(16,167,165,.26), transparent 62%),
-        radial-gradient(1100px 700px at 60% 10%, rgba(15,23,42,.08), transparent 62%),
-        #f7f8fb;
+      background:#f4f7fb;
     }
-
-    /* Vague 1 (visible) */
-    .fond-anime::before{
-      content:"";
+    .blob{
       position:absolute;
-      inset:-70px;
-      opacity:.95;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='220' viewBox='0 0 1200 220'%3E%3Cpath d='M0 120 C 150 40, 300 200, 450 120 C 600 40, 750 200, 900 120 C 1050 40, 1150 170, 1200 120 L 1200 220 L 0 220 Z' fill='%230aa7a5' fill-opacity='0.26'/%3E%3C/svg%3E");
-      background-repeat:repeat-x;
-      background-size:1200px 220px;
-      background-position:0 88%;
-      filter:blur(0.8px);
-      animation: vagueX1 10s linear infinite, vagueY1 6.8s ease-in-out infinite;
+      width:520px;height:520px;
+      border-radius:50%;
+      filter: blur(30px);
+      opacity:.78;
+      animation: float 10s ease-in-out infinite;
       transform: translate3d(0,0,0);
     }
+    .b1{left:-120px;top:-140px;background:rgba(216,161,6,.45)}
+    .b2{right:-160px;top:18%;background:rgba(10,167,165,.40);animation-duration:12s}
+    .b3{left:18%;bottom:-180px;background:rgba(99,102,241,.26);animation-duration:14s}
+    @keyframes float{
+      0%{transform:translate(0,0) scale(1)}
+      50%{transform:translate(20px,-18px) scale(1.06)}
+      100%{transform:translate(0,0) scale(1)}
+    }
 
-    /* Vague 2 (visible) */
-    .fond-anime::after{
-      content:"";
+    .wave{
       position:absolute;
-      inset:-90px;
-      opacity:.85;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='260' viewBox='0 0 1400 260'%3E%3Cpath d='M0 150 C 175 70, 350 230, 525 150 C 700 70, 875 230, 1050 150 C 1225 70, 1325 210, 1400 150 L 1400 260 L 0 260 Z' fill='%23d8a106' fill-opacity='0.24'/%3E%3C/svg%3E");
-      background-repeat:repeat-x;
-      background-size:1400px 260px;
-      background-position:0 92%;
-      filter:blur(0.9px);
-      animation: vagueX2 16s linear infinite reverse, vagueY2 8.5s ease-in-out infinite;
+      left:-25%;
+      width:150%;
+      height:46vh;
+      bottom:-8vh;
+      opacity:.72;
+      filter: blur(.6px);
       transform: translate3d(0,0,0);
     }
-
-    @keyframes vagueX1{
-      from{background-position:0 88%}
-      to{background-position:1200px 88%}
+    .wave path{fill:rgba(10,167,165,.30)}
+    .w1{animation: waveMove 9s linear infinite}
+    .w2{
+      bottom:-12vh;
+      height:52vh;
+      opacity:.56;
+      animation: waveMove 14s linear infinite reverse;
     }
-    @keyframes vagueX2{
-      from{background-position:0 92%}
-      to{background-position:1400px 92%}
-    }
-    @keyframes vagueY1{
-      0%{transform:translateY(0)}
-      50%{transform:translateY(-10px)}
-      100%{transform:translateY(0)}
-    }
-    @keyframes vagueY2{
-      0%{transform:translateY(0)}
-      50%{transform:translateY(-14px)}
-      100%{transform:translateY(0)}
+    .w2 path{fill:rgba(216,161,6,.28)}
+    @keyframes waveMove{
+      from{transform:translateX(0)}
+      to{transform:translateX(20%)}
     }
 
-    /* ===== Header (couleurs du logo) ===== */
+    /* ===== Layout / éléments ===== */
+    .muted{color:rgba(15,23,42,.65)}
+    .small{font-size:13px;color:rgba(15,23,42,.62);margin-top:10px}
+
+    /* ===== Header ===== */
     header{
-      position:sticky; top:0; z-index:50;
-      background: linear-gradient(135deg,
-        rgba(10,167,165,.16),
-        rgba(216,161,6,.14)
-      );
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.86);
       border-bottom:1px solid rgba(0,0,0,.08);
       backdrop-filter:blur(14px);
     }
@@ -110,38 +96,63 @@
       gap:12px;
     }
 
-    /* Logo : SANS cadre (juste le logo) */
     .brand{
-      display:flex;gap:12px;align-items:center;cursor:pointer;
+      display:flex;gap:14px;align-items:center;cursor:pointer;
       user-select:none;
     }
+
+    /* ✅ LOGO FONDU PREMIUM (sans carré) */
     .brand-logo{
-      width:64px;height:64px;
-      padding:0;
-      border:none;
-      background:transparent;
-      box-shadow:none;
-      border-radius:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      width:64px;
+      height:64px;
+      position:relative;
+      display:grid;
+      place-items:center;
+      border-radius:20px;
       overflow:visible;
+      background:transparent !important;
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      flex:0 0 auto;
+    }
+    .brand-logo::before{
+      content:"";
+      position:absolute;
+      inset:-14px;
+      border-radius:26px;
+      background:
+        radial-gradient(circle at 35% 35%, rgba(216,161,6,.28), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(10,167,165,.22), transparent 58%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%);
+      filter: blur(8px);
+      opacity:.95;
+      z-index:0;
     }
     .brand-logo img{
       width:64px;height:64px;
       object-fit:contain;
-      filter:none;
-      opacity:1;
-      display:block;
+      border-radius:18px;
+      position:relative;
+      z-index:1;
+      opacity:.98;
+      filter:
+        drop-shadow(0 14px 18px rgba(0,0,0,.12))
+        drop-shadow(0 0 18px rgba(216,161,6,.12));
+
+      /* fade sur les bords */
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 66%, transparent 100%);
+              mask-image: radial-gradient(circle at 50% 50%, #000 66%, transparent 100%);
     }
+
     .brand strong{font-size:18px;display:block;line-height:1.05}
-    .brand span{display:block;font-size:12px;color:rgba(15,23,42,.72)}
+    .brand span{display:block;font-size:12px;color:rgba(15,23,42,.62)}
 
     /* Menu PC */
     .nav-desktop{display:flex;align-items:center}
     .nav-desktop a{
-      margin-left:18px;font-weight:900;
-      color:rgba(15,23,42,.86);
+      margin-left:18px;font-weight:800;
+      color:rgba(15,23,42,.78);
       transition:transform .12s ease, color .12s ease;
     }
     .nav-desktop a:hover{color:rgba(15,23,42,1);transform:translateY(-1px)}
@@ -150,8 +161,9 @@
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
       padding:12px 16px;border-radius:14px;
-      font-weight:900;border:1px solid rgba(0,0,0,.10);
-      background:rgba(255,255,255,.92);cursor:pointer;
+      font-weight:800;border:1px solid rgba(0,0,0,.10);
+      background:rgba(255,255,255,.92);
+      cursor:pointer;
       transition:transform .15s ease, box-shadow .15s ease;
       user-select:none;
       white-space:nowrap;
@@ -166,13 +178,7 @@
     .btn.full{width:100%}
 
     /* Actions mobile */
-    .header-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-right:6px; /* décale légèrement vers la gauche */
-    }
-
+    .header-actions{display:flex;align-items:center;gap:10px}
     .burger{
       display:none;
       font-size:22px;
@@ -182,18 +188,15 @@
       border-radius:12px;
       cursor:pointer;
       transition:transform .15s ease;
-      margin-right:6px; /* évite d’être collé à droite */
     }
     .burger:hover{transform:translateY(-2px)}
-
-    /* Bouton Appeler dans header (mobile) */
     .call-header{
       display:none;
       padding:10px 14px;
       border-radius:12px;
       font-weight:900;
       border:1px solid rgba(0,0,0,.10);
-      background:linear-gradient(135deg, rgba(216,161,6,.26), rgba(10,167,165,.20));
+      background:linear-gradient(135deg, rgba(216,161,6,.22), rgba(10,167,165,.16));
       box-shadow:0 14px 34px rgba(0,0,0,.10);
     }
 
@@ -213,9 +216,9 @@
     }
     .mobile-menu a{
       padding:12px 0;
-      font-weight:900;
+      font-weight:800;
       border-bottom:1px solid rgba(0,0,0,.06);
-      color:rgba(15,23,42,.88);
+      color:rgba(15,23,42,.85);
     }
     .mobile-menu a:last-child{border-bottom:none}
     .mobile-menu.show{display:flex}
@@ -236,9 +239,9 @@
     .lead{color:rgba(15,23,42,.72);line-height:1.75;max-width:62ch}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
 
-    /* ===== Cards / boxes ===== */
-    .card,.box{
-      background:rgba(255,255,255,.80);
+    /* ===== Cartes transparentes (pour voir le fond) ===== */
+    .card,.box,.step,.priceCard{
+      background:rgba(255,255,255,.78);
       border:1px solid rgba(0,0,0,.10);
       border-radius:20px;
       padding:22px;
@@ -246,7 +249,7 @@
       backdrop-filter:blur(10px);
       transition:transform .22s ease, box-shadow .22s ease;
     }
-    .box:hover,.card:hover{
+    .box:hover,.card:hover,.step:hover,.priceCard:hover{
       transform:translateY(-6px);
       box-shadow:0 28px 76px rgba(0,0,0,.12);
     }
@@ -256,7 +259,7 @@
     /* ===== Sections ===== */
     .section{padding:40px 0}
     .section.light{
-      background:rgba(255,255,255,.18);
+      background:rgba(255,255,255,.28);
       border-top:1px solid rgba(0,0,0,.05);
       border-bottom:1px solid rgba(0,0,0,.05);
       backdrop-filter:blur(10px);
@@ -269,24 +272,14 @@
     .chip{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;border-radius:999px;
-      background:rgba(255,255,255,.82);
+      background:rgba(255,255,255,.86);
       border:1px solid rgba(0,0,0,.10);
       box-shadow:0 10px 25px rgba(0,0,0,.07);
-      font-weight:900;font-size:13px;color:rgba(15,23,42,.78)
+      font-weight:800;font-size:13px;color:rgba(15,23,42,.78)
     }
 
     /* 30 jours */
     .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:14px}
-    .step{
-      background:rgba(255,255,255,.80);
-      border:1px solid rgba(0,0,0,.10);
-      border-radius:18px;
-      padding:18px;
-      box-shadow:0 18px 50px rgba(0,0,0,.08);
-      backdrop-filter:blur(10px);
-      transition:transform .22s ease, box-shadow .22s ease;
-    }
-    .step:hover{transform:translateY(-6px);box-shadow:0 28px 76px rgba(0,0,0,.12)}
     .kpi{
       width:44px;height:44px;border-radius:14px;
       display:grid;place-items:center;
@@ -324,7 +317,7 @@
     input,select,textarea{
       width:100%;margin-top:6px;padding:12px 12px;
       border-radius:12px;border:1px solid rgba(0,0,0,.14);
-      background:rgba(255,255,255,.96);
+      background:rgba(255,255,255,.92);
       font-family:inherit;font-size:14px;outline:none;
       transition:box-shadow .15s ease, border-color .15s ease;
     }
@@ -344,7 +337,7 @@
     }
     .backTop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 
-    /* Animations premium (reveal) */
+    /* Animations premium */
     .reveal{
       opacity:0;
       transform:translateY(18px);
@@ -375,14 +368,27 @@
       .burger{display:inline-flex}
       .call-header{display:inline-flex}
 
-      .brand-logo{width:68px;height:68px}
-      .brand-logo img{width:68px;height:68px}
+      .brand-logo{width:70px;height:70px}
+      .brand-logo img{width:70px;height:70px}
     }
   </style>
 </head>
 
 <body>
-  <div class="fond-anime" aria-hidden="true"></div>
+  <!-- Fond animé -->
+  <div class="bg-anim" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+
+    <svg class="wave w1" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path d="M0,160 C240,80 480,240 720,160 C960,80 1200,240 1440,160 L1440,320 L0,320 Z"></path>
+    </svg>
+
+    <svg class="wave w2" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path d="M0,180 C240,120 480,260 720,180 C960,100 1200,260 1440,180 L1440,320 L0,320 Z"></path>
+    </svg>
+  </div>
 
   <header>
     <div class="container header-inner">
@@ -396,7 +402,6 @@
         </div>
       </div>
 
-      <!-- Menu PC -->
       <nav class="nav-desktop">
         <a href="#services">Services</a>
         <a href="#forwho">Pour qui ?</a>
@@ -406,7 +411,6 @@
         <a href="#contact" class="btn">Contact</a>
       </nav>
 
-      <!-- Actions mobile -->
       <div class="header-actions">
         <a class="call-header" href="tel:0617255364" aria-label="Appeler HM Digital">📞 Appeler</a>
         <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">☰</button>
