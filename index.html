@@ -28,40 +28,58 @@
     .muted{color:rgba(15,23,42,.65)}
     .small{font-size:13px;color:rgba(15,23,42,.62);margin-top:10px}
 
-    /* ===== Fond premium animé (sans dépendance) ===== */
+    /* ===== Fond visuel (VRAIMENT visible) ===== */
     .bg{
-      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      position:fixed; inset:0; z-index:-3; pointer-events:none;
+      background:#0b1220;
+    }
+
+    /* Mesh / “liquid” animé */
+    .mesh{
+      position:fixed; inset:-40px; z-index:-2; pointer-events:none;
       background:
-        radial-gradient(circle at 20% 20%, rgba(216,161,6,0.16), transparent 45%),
-        radial-gradient(circle at 80% 80%, rgba(16,167,165,0.16), transparent 45%),
-        radial-gradient(circle at 55% 10%, rgba(15,23,42,0.06), transparent 55%),
-        #f7f8fb;
-    }
-    .noise{
-      position:fixed; inset:0; z-index:-1; pointer-events:none;
-      opacity:.06;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-    }
-    .orb{
-      position:fixed; width:520px; height:520px; border-radius:50%;
-      filter:blur(40px); opacity:.22; z-index:-1; pointer-events:none;
-      animation: floaty 12s ease-in-out infinite;
+        radial-gradient(800px 520px at 10% 10%, rgba(216,161,6,.55), transparent 60%),
+        radial-gradient(700px 520px at 90% 20%, rgba(16,167,165,.55), transparent 62%),
+        radial-gradient(900px 600px at 60% 95%, rgba(255,255,255,.18), transparent 62%),
+        radial-gradient(700px 520px at 25% 85%, rgba(99,102,241,.28), transparent 60%),
+        radial-gradient(900px 700px at 70% 55%, rgba(16,167,165,.25), transparent 60%);
+      filter: blur(22px) saturate(125%);
+      opacity:.95;
+      animation: drift 14s ease-in-out infinite;
       transform: translate3d(0,0,0);
     }
-    .orb.gold{
-      right:-180px; top:-180px;
-      background: radial-gradient(circle at 30% 30%, rgba(216,161,6,.9), transparent 60%);
-      animation-delay:-2s;
-    }
-    .orb.teal{
-      left:-180px; bottom:-180px;
-      background: radial-gradient(circle at 30% 30%, rgba(16,167,165,.85), transparent 60%);
-      animation-delay:-5s;
-    }
-    @keyframes floaty{
+    @keyframes drift{
       0%{transform:translate3d(0,0,0) scale(1)}
-      50%{transform:translate3d(18px,-14px,0) scale(1.04)}
+      50%{transform:translate3d(22px,-14px,0) scale(1.03)}
       100%{transform:translate3d(0,0,0) scale(1)}
+    }
+
+    /* Waves (visuel derrière) */
+    .waves{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      opacity:.85;
+      background:
+        repeating-linear-gradient(
+          115deg,
+          rgba(255,255,255,.06) 0px,
+          rgba(255,255,255,.06) 2px,
+          transparent 2px,
+          transparent 34px
+        );
+      mask-image: radial-gradient(circle at 50% 35%, rgba(0,0,0,1) 0%, rgba(0,0,0,.85) 45%, rgba(0,0,0,.35) 75%, rgba(0,0,0,0) 100%);
+      animation: wavesMove 10s linear infinite;
+    }
+    @keyframes wavesMove{
+      from{transform:translateX(0)}
+      to{transform:translateX(120px)}
+    }
+
+    /* Overlay clair pour lisibilité */
+    .overlay{
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background: linear-gradient(180deg, rgba(247,248,251,.82), rgba(247,248,251,.92));
+      mix-blend-mode: screen;
+      opacity:.95;
     }
 
     /* ===== Header ===== */
@@ -109,7 +127,7 @@
       user-select:none;
       white-space:nowrap;
     }
-    .btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.10)}
     .btn.primary{
       background:linear-gradient(135deg,#d8a106,#0aa7a5);
       color:#0f172a;border:1px solid rgba(0,0,0,.12);
@@ -118,12 +136,9 @@
     .btn.ghost{background:transparent}
     .btn.full{width:100%}
 
-    /* Zone actions à droite (mobile) */
-    .header-actions{
-      display:flex; align-items:center; gap:10px;
-    }
+    /* Actions à droite (mobile) */
+    .header-actions{display:flex;align-items:center;gap:10px}
 
-    /* Burger + menu mobile */
     .burger{
       display:none;
       font-size:22px;
@@ -136,15 +151,15 @@
     }
     .burger:hover{transform:translateY(-2px)}
 
-    /* Bouton Appeler dans le header (mobile) */
+    /* Bouton Appeler dans header (mobile) */
     .call-header{
-      display:none; /* visible seulement mobile */
-      padding:10px 12px;
+      display:none;
+      padding:10px 14px;
       border-radius:12px;
       font-weight:900;
       border:1px solid rgba(0,0,0,.10);
-      background:linear-gradient(135deg, rgba(216,161,6,.18), rgba(10,167,165,.12));
-      box-shadow:0 14px 34px rgba(0,0,0,.08);
+      background:linear-gradient(135deg, rgba(216,161,6,.22), rgba(10,167,165,.16));
+      box-shadow:0 14px 34px rgba(0,0,0,.10);
     }
 
     .mobile-menu{
@@ -192,13 +207,13 @@
       border:1px solid rgba(0,0,0,.10);
       border-radius:20px;
       padding:22px;
-      box-shadow:0 18px 50px rgba(0,0,0,.06);
+      box-shadow:0 18px 50px rgba(0,0,0,.08);
       backdrop-filter:blur(10px);
       transition:transform .22s ease, box-shadow .22s ease;
     }
     .box:hover,.card:hover{
-      transform:translateY(-5px);
-      box-shadow:0 26px 70px rgba(0,0,0,.09);
+      transform:translateY(-6px);
+      box-shadow:0 28px 76px rgba(0,0,0,.12);
     }
     .card h3,.box h3{margin:0 0 10px}
     .card ul{padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
@@ -221,7 +236,7 @@
       padding:10px 12px;border-radius:999px;
       background:rgba(255,255,255,.95);
       border:1px solid rgba(0,0,0,.10);
-      box-shadow:0 10px 25px rgba(0,0,0,.06);
+      box-shadow:0 10px 25px rgba(0,0,0,.07);
       font-weight:800;font-size:13px;color:rgba(15,23,42,.78)
     }
 
@@ -232,11 +247,11 @@
       border:1px solid rgba(0,0,0,.10);
       border-radius:18px;
       padding:18px;
-      box-shadow:0 18px 50px rgba(0,0,0,.06);
+      box-shadow:0 18px 50px rgba(0,0,0,.08);
       backdrop-filter:blur(10px);
       transition:transform .22s ease, box-shadow .22s ease;
     }
-    .step:hover{transform:translateY(-5px);box-shadow:0 26px 70px rgba(0,0,0,.09)}
+    .step:hover{transform:translateY(-6px);box-shadow:0 28px 76px rgba(0,0,0,.12)}
     .kpi{
       width:44px;height:44px;border-radius:14px;
       display:grid;place-items:center;
@@ -258,7 +273,7 @@
     .price{font-size:30px;font-weight:900;margin:10px 0}
     .priceCard ul{padding-left:18px;color:rgba(15,23,42,.72);line-height:1.85}
     .featured{
-      background:linear-gradient(180deg, rgba(216,161,6,.10), rgba(10,167,165,.06));
+      background:linear-gradient(180deg, rgba(216,161,6,.12), rgba(10,167,165,.07));
       border-color:rgba(216,161,6,.35);
     }
 
@@ -294,13 +309,12 @@
     }
     .backTop.show{opacity:1;pointer-events:auto;transform:translateY(0)}
 
-    /* ===== Animations premium (reveal) =====
-       Effet : apparition douce + léger blur qui disparaît */
+    /* Animations premium (reveal) */
     .reveal{
       opacity:0;
       transform:translateY(18px);
-      filter:blur(6px);
-      transition:opacity .75s ease, transform .75s ease, filter .75s ease;
+      filter:blur(7px);
+      transition:opacity .8s ease, transform .8s ease, filter .8s ease;
       will-change:opacity,transform,filter;
     }
     .reveal.is-visible{
@@ -323,17 +337,18 @@
       .timeline{grid-template-columns:1fr}
 
       .nav-desktop{display:none}
-      .burger{display:block}
-      .call-header{display:inline-flex;align-items:center;justify-content:center}
+      .burger{display:inline-flex}
+      .call-header{display:inline-flex}
     }
   </style>
 </head>
 
 <body>
+  <!-- Fond visuel -->
   <div class="bg"></div>
-  <div class="noise"></div>
-  <div class="orb gold"></div>
-  <div class="orb teal"></div>
+  <div class="mesh"></div>
+  <div class="waves"></div>
+  <div class="overlay"></div>
 
   <header>
     <div class="container header-inner">
@@ -355,9 +370,9 @@
         <a href="#contact" class="btn">Contact</a>
       </nav>
 
-      <!-- Actions à droite (mobile) -->
+      <!-- Actions mobile -->
       <div class="header-actions">
-        <a class="call-header" href="tel:0617255364" aria-label="Appeler HM Digital">📞</a>
+        <a class="call-header" href="tel:0617255364" aria-label="Appeler HM Digital">📞 Appeler</a>
         <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">☰</button>
       </div>
     </div>
@@ -641,7 +656,6 @@
   <button class="btn primary backTop" id="backTop" type="button">↑ Retour en haut</button>
 
   <script>
-    // Année
     document.getElementById("year").textContent = new Date().getFullYear();
 
     // Logo = retour en haut
@@ -671,7 +685,7 @@
       });
     });
 
-    // Animations reveal (premium)
+    // Animations reveal
     var revealEls = document.querySelectorAll(".reveal");
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
